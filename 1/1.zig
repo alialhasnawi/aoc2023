@@ -18,7 +18,7 @@ pub fn main() !void {
         if (maybe_line) |line| {
             for (line, 0..) |char, pos| {
                 next_num = switch (char) {
-                    '1'...'9' => char_to_number(char),
+                    '1'...'9' => char - '0',
                     else => check_if_word_num(line[pos..]),
                     // else => 0,
                 };
@@ -31,32 +31,16 @@ pub fn main() !void {
 
             total += 10 * first_num + second_num;
         } else break;
-    } else |err| {
-        std.debug.print("{!}", .{err});
-    }
+    } else |err| std.debug.print("{!}", .{err});
 
     std.debug.print("The total is: {d}.\n", .{total});
 }
 
-inline fn char_to_number(char: u8) u8 {
-    return char - '0';
-}
-
-const word_nums = [_][]const u8{
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-};
+const word_nums = [_][]const u8{ "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
 inline fn check_if_word_num(string: []u8) u8 {
-    for (word_nums, 1..) |word, value| {
+    for (word_nums, 1..) |word, value|
         if (std.mem.startsWith(u8, string, word)) return @intCast(value);
-    }
+
     return 0;
 }
