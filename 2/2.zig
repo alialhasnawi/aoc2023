@@ -1,11 +1,8 @@
 const std = @import("std");
 
-pub fn main() !void {
-    var file = try std.fs.cwd().openFile("input.txt", .{});
-    defer file.close();
+pub fn solve(comptime part: u32, reader: std.io.AnyReader, allocator: std.mem.Allocator) !u32 {
+    _ = allocator;
 
-    var buffered_reader = std.io.bufferedReader(file.reader());
-    const reader = buffered_reader.reader();
     var line_buffer = [_]u8{0} ** 1024;
 
     var id_sum: u32 = 0;
@@ -45,8 +42,7 @@ pub fn main() !void {
         std.debug.print("{!}", .{err});
     }
 
-    std.debug.print("Part 1: The ID sum is {d}\n", .{id_sum});
-    std.debug.print("Part 2: The power sum is {d}\n", .{power_sum});
+    return if (part == 1) id_sum else power_sum;
 }
 
 const Game = struct { id: u32 = 0, red: u32 = 0, green: u32 = 0, blue: u32 = 0 };

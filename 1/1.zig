@@ -1,11 +1,8 @@
 const std = @import("std");
 
-pub fn main() !void {
-    var file = try std.fs.cwd().openFile("input.txt", .{});
-    defer file.close();
+pub fn solve(comptime part: u32, reader: std.io.AnyReader, allocator: std.mem.Allocator) !u32 {
+    _ = allocator;
 
-    var buffered_reader = std.io.bufferedReader(file.reader());
-    const reader = buffered_reader.reader();
     var line_buffer = [_]u8{0} ** 1024;
 
     var total: u32 = 0;
@@ -19,8 +16,8 @@ pub fn main() !void {
             for (line, 0..) |char, pos| {
                 next_num = switch (char) {
                     '1'...'9' => char - '0',
-                    else => check_if_word_num(line[pos..]),
-                    // else => 0,
+                    // In part 1, don't do the word to number conversion.
+                    else => if (part == 2) check_if_word_num(line[pos..]) else 0,
                 };
 
                 if (next_num != 0) {
@@ -33,7 +30,7 @@ pub fn main() !void {
         } else break;
     } else |err| std.debug.print("{!}", .{err});
 
-    std.debug.print("The total is: {d}.\n", .{total});
+    return total;
 }
 
 const word_nums = [_][]const u8{ "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
