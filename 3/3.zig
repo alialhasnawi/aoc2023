@@ -42,7 +42,7 @@ pub fn solve(comptime part: u32, reader: std.io.AnyReader, allocator: std.mem.Al
     return answer;
 }
 
-const debug = true;
+const debug = false;
 
 fn get_partial_total(comptime part: u32, prev: []u8, curr: []u8, next: []u8) !u32 {
     assert(prev.len == curr.len and curr.len == next.len);
@@ -222,21 +222,21 @@ inline fn is_digit(char: u8) bool {
     };
 }
 
-test "part 1" {
-    const example =
-        \\467..114..
-        \\...*......
-        \\..35..633.
-        \\......#...
-        \\617*......
-        \\.....+.58.
-        \\..592.....
-        \\......755.
-        \\...$.*....
-        \\.664.598..
-        \\
-    ;
+const example =
+    \\467..114..
+    \\...*......
+    \\..35..633.
+    \\......#...
+    \\617*......
+    \\.....+.58.
+    \\..592.....
+    \\......755.
+    \\...$.*....
+    \\.664.598..
+    \\
+;
 
+test "part 1" {
     var stream = std.io.fixedBufferStream(example);
     const reader = stream.reader().any();
 
@@ -245,20 +245,6 @@ test "part 1" {
 }
 
 test "part 2" {
-    const example =
-        \\467..114..
-        \\...*......
-        \\..35..633.
-        \\......#...
-        \\617*......
-        \\.....+.58.
-        \\..592.....
-        \\......755.
-        \\...$.*....
-        \\.664.598..
-        \\
-    ;
-
     var stream = std.io.fixedBufferStream(example);
     const reader = stream.reader().any();
 
