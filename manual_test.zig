@@ -1,8 +1,8 @@
 const std = @import("std");
 const print = std.debug.print;
 
-const solution = @import("3/3.zig");
-const input = @embedFile("3/input.txt");
+const solution = @import("5/solution.zig");
+const input = @embedFile("5/input.txt");
 
 pub fn main() !void {
     // Initialize allocator
@@ -10,7 +10,6 @@ pub fn main() !void {
     const gpa_alloc = gpa.allocator();
     defer {
         if (gpa.deinit() == .leak) std.debug.print("Skill issue.\n", .{});
-        // @panic("How did you leak with 3 allocations?");
     }
     const buffer = try gpa_alloc.alloc(u8, 1_000_000);
     defer gpa_alloc.free(buffer);
